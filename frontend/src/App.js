@@ -1,4 +1,4 @@
-import appcss from "./App.module.css";
+import  "./App.css";
 import Login from "./components/login/login";
 import Homepage from "./components/home/home";
 // import { useState } from "react";

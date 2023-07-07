@@ -20,7 +20,7 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
       w={{ base: "100%", md: "68%" }}
       borderRadius="md"
       borderWidth="1px"
-      bgImage="https://wallpapersafari.com/image/purple-textured-wallpaper.jpg"
+      // bgImage="https://wallpapersafari.com/image/purple-textured-wallpaper.jpg"
       // bgImage="url('/images/bcg.png')"
       // bgPosition="center"
       // bgRepeat="no-repeat"

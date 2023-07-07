@@ -17,7 +17,7 @@ const HomePage = () => {
 
         {/* Go to Login Page Button */}
         <Link to="/login">
-          <Button colorScheme="red" size="lg" color={"white"}>
+          <Button borderColor="black" size="lg" color={"black"} >
             Go to Login Page
           </Button>
         </Link>

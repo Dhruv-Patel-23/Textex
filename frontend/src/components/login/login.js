@@ -123,7 +123,7 @@ const Login = () => {
         >
           <form>
             <h1>Sign in</h1>
-            <div className={styles["social-container"]}>
+            {/* <div className={styles["social-container"]}>
               <a href="#" className={styles.social}>
                 <i className="fab fa-facebook-f"></i>
               </a>
@@ -133,8 +133,8 @@ const Login = () => {
               <a href="#" className={styles.social}>
                 <i className="fab fa-linkedin-in"></i>
               </a>
-            </div>
-            <span>or use your account</span>
+            </div> */}
+            {/* <span>or use your account</span> */}
             <input
               type="email"
               name="email"
@@ -177,8 +177,8 @@ const Login = () => {
         >
           <form method="POST">
             <h1>Create Account</h1>
-            <div className={styles["social-container"]}>
-              <a href="#" className={styles.social}>
+           {/* <div className={styles["social-container"]}>
+               <a href="#" className={styles.social}>
                 <i className="fab fa-facebook-f"></i>
               </a>
               <a href="#" className={styles.social}>
@@ -187,8 +187,8 @@ const Login = () => {
               <a href="#" className={styles.social}>
                 <i className="fab fa-linkedin-in"></i>
               </a>
-            </div>
-            <span>or use your email for registration</span>
+            </div> */}
+            {/* <span>or use your email for registration</span> */}
             <input
               type="text"
               name="name"

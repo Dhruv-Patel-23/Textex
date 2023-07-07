@@ -180,13 +180,13 @@ function SideDrawer() {
   return (
     <div>
       <Box
-        display="flex"
+         display={{ base: "flex", md: "flex" }}
         justifyContent="space-between"
         alignItems="center"
         bgGradient='linear(to-l, #a431ae, #FF5B3B)'
         w="100%"
         p="5px 10px 5px 10px"
-        borderWidth="5px"
+        borderWidth="2px"
         color="white"
       >
         <Tooltip label="Search Users to chat" placement="bottom-end">
@@ -201,28 +201,31 @@ function SideDrawer() {
           Textex
         </Text>
 
-        <div>
+        <Box m="0" w="10%" display="flex" justifyContent="space-between">
           <Menu>
           <MenuButton p={1}>
             <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon fontSize="2xl" m="1" p="0" />
             </MenuButton> 
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
+                  
                   key={notif._id}
                   onClick={() => {
                     setSelectedChat(notif.chat);
                     setNotification(notification.filter((n) => n !== notif));
                   }}
                 >
+                  <Box color="black">
                   {notif.chat.isGroupChat
                     ? `New Message in ${notif.chat.chatName}`
                     : `New Message from ${getSender(user, notif.chat.users)}`}
+                    </Box>
                 </MenuItem>
               ))}
             </MenuList>
@@ -239,7 +242,7 @@ function SideDrawer() {
               <MenuItem bg="white" color="black" onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </div>
+        </Box>
       </Box>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
