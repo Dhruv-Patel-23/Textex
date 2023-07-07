@@ -28,7 +28,7 @@ import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 
 import ProfileModal from "./ProfileModal";
-import NotificationBadge from "react-notification-badge";
+import NotificationBadge from "./NotificationBadge";
 import { Effect } from "react-notification-badge";
 // import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../UserAvatar/UserListItem";
@@ -203,12 +203,14 @@ function SideDrawer() {
 
         <Box m="0" w="10%" display="flex" justifyContent="space-between">
           <Menu>
-          <MenuButton p={1}>
-            <NotificationBadge
+          <MenuButton p={1} >
+            
+              <BellIcon fontSize="2xl" m="1" p="0" />
+              <NotificationBadge
+              
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m="1" p="0" />
             </MenuButton> 
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}

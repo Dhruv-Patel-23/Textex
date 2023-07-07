@@ -1,0 +1,22 @@
+.notification-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+  }
+  
+  .notification-badge.scale {
+    animation: scaleEffect 0.3s ease-in-out alternate infinite;
+  }
+  
+  @keyframes scaleEffect {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.2);
+    }
+  }
+  
