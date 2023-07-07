@@ -20,6 +20,7 @@ function App() {
           element={user ? <Chatpage /> : <Navigate to="/login" />}
         />
       <Route path="/login" element={<Login />} />
+      <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Box>
   );
