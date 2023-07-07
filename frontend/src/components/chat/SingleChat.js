@@ -19,8 +19,7 @@ import ScrollableChat from "./ScrollableChat";
 import io from 'socket.io-client'
 
 
-
-const ENDPOINT="http://localhost:8000";
+const API_URL="https://textex-server.onrender.com"
 var socket,selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -45,7 +44,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:8000/api/message",
+          `${API_URL}/api/message`,
           { content: newMessage, chatId: selectedChat._id },
           config
         );
@@ -78,7 +77,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:8000/api/message/${selectedChat._id}`,
+        `${API_URL}/api/message/${selectedChat._id}`,
+
         config
       );
       console.log(messages);
@@ -98,7 +98,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
   useEffect(() => {
-    socket =io(ENDPOINT)
+    socket =io(API_URL)
     socket.emit("setup",user)
     socket.on("connected",()=>{
    setSocketConnected(true)

@@ -43,7 +43,7 @@ const server=app.listen(PORT, () => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://master--starlit-lokum-e96e21.netlify.app",
     // credentials: true,
   },
 });

@@ -7,6 +7,8 @@ import { Box } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import ParticlesBg from "particles-bg";
 const Login = () => {
+
+  const API_URL="https://textex-server.onrender.com"
   const { setUser } = ChatState();
 
   const [isSignUp, setIsSignUp] = useState(false);
@@ -74,7 +76,7 @@ const Login = () => {
     const { name, email, password } = userSignOut;
     if (name && email && password) {
       axios
-        .post("http://localhost:8000/register", userSignOut)
+        .post(`${API_URL}/register`, userSignOut)
         .then((response) => {
           localStorage.setItem("userInfo", JSON.stringify(response.data));
         });
@@ -86,7 +88,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/login",
+        `${API_URL}/login`,
         userSignIn
       );
       //alert(response.data.name);

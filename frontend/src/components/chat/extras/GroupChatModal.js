@@ -21,6 +21,10 @@ import { ChatState } from "../../../context/ChatProvider";
 import UserBadgeItem from "../UserAvatar/UserBadgeItem.js";
 import UserListItem from "../UserAvatar/UserListItem.js";
 
+
+const API_URL="https://textex-server.onrender.com"
+
+
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
@@ -61,7 +65,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:8000/api/user?search=${search}`,
+        `${API_URL}/api/user?search=${search}`,
         config
       );
       console.log(data);
@@ -104,7 +108,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:8000/api/chat/group`,
+        `${API_URL}/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),

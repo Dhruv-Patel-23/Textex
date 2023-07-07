@@ -34,6 +34,10 @@ import NotificationBadge from "./NotificationBadge";
 import UserListItem from "../UserAvatar/UserListItem";
 import { ChatState } from "../../../context/ChatProvider";
 
+
+const API_URL="https://textex-server.onrender.com"
+
+
 function SideDrawer() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -115,7 +119,7 @@ function SideDrawer() {
         },
       };
       console.log(search)
-      const { data } = await axios.get(`http://localhost:8000/api/user?search=${search}`, config);
+      const { data } = await axios.get(`${API_URL}/api/user?search=${search}`, config);
       // setLoading(true);
       // console.log(search);
       // const url = `/api/user?search=${search}`;
@@ -159,7 +163,7 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`http://localhost:8000/api/chat`, { userId }, config);
+      const { data } = await axios.post(`${API_URL}/api/chat`, { userId }, config);
       console.log(data);
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);

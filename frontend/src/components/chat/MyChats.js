@@ -9,6 +9,9 @@ import GroupChatModal from "./extras/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../../context/ChatProvider";
 
+
+const API_URL="https://textex-server.onrender.com"
+
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
@@ -26,7 +29,7 @@ const MyChats = ({ fetchAgain }) => {
       };
 
       const { data } = await axios.get(
-        "http://localhost:8000/api/chat",
+        `${API_URL}/api/chat`,
         config
       );
       setChats(data);
