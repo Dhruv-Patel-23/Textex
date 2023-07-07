@@ -29,7 +29,7 @@ import { Spinner } from "@chakra-ui/spinner";
 
 import ProfileModal from "./ProfileModal";
 import NotificationBadge from "./NotificationBadge";
-import { Effect } from "react-notification-badge";
+// import { Effect } from "react-notification-badge";
 // import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../UserAvatar/UserListItem";
 import { ChatState } from "../../../context/ChatProvider";
@@ -209,8 +209,8 @@ function SideDrawer() {
               <NotificationBadge
               
                 count={notification.length}
-                effect={Effect.SCALE}
-              />
+                effect="scale"       
+                       />
             </MenuButton> 
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
