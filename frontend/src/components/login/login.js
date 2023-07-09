@@ -6,14 +6,16 @@ import { ChatState } from "../../context/ChatProvider";
 import { Box } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import ParticlesBg from "particles-bg";
+import { Spinner } from "@chakra-ui/react";
 const Login = () => {
+  const API_URL =
+    "https://textex-server.onrender.com"; /* "http://localhost:8000"*/
 
-  const API_URL="https://textex-server.onrender.com"
   const { setUser } = ChatState();
 
   const [isSignUp, setIsSignUp] = useState(false);
   const [buttonColor, setButtonColor] = useState("#b4418e");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // For Login
@@ -71,15 +73,30 @@ const Login = () => {
     };
   }, []);
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
     const { name, email, password } = userSignOut;
     if (name && email && password) {
-      axios
-        .post(`${API_URL}/register`, userSignOut)
-        .then((response) => {
-          localStorage.setItem("userInfo", JSON.stringify(response.data));
-        });
+      // axios
+      //   .post(`${API_URL}/register`, userSignOut)
+      //   .then((response) => {
+      //     localStorage.setItem("userInfo", JSON.stringify(response.data));
+      //   })
+      //   .then((data) => setUser(data))
+      //   .then(setLoading(false))
+      //   .then(navigate("/chats"));
+      try {
+        setLoading(true);
+        const response = await axios.post(`${API_URL}/register`, userSignOut);
+        //alert(response.data.name);
+        localStorage.setItem("userInfo", JSON.stringify(response.data));
+        // console.log(response);
+        setLoading(false);
+        setUser(response.data);
+        navigate("/chats");
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       alert("invalid input");
     }
@@ -87,22 +104,18 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${API_URL}/login`,
-        userSignIn
-      );
+      setLoading(true);
+      const response = await axios.post(`${API_URL}/login`, userSignIn);
       //alert(response.data.name);
       localStorage.setItem("userInfo", JSON.stringify(response.data));
       console.log(response);
+      setLoading(false);
       setUser(response.data);
       navigate("/chats");
     } catch (error) {
       console.log(error);
     }
   };
-
-
-
 
   return (
     <Box
@@ -114,8 +127,9 @@ const Login = () => {
     >
       <ParticlesBg type="fountain" bg={true} />
       <div
-        className={`${styles.container} ${isSignUp ? styles["right-panel-active"] : ""
-          }`}
+        className={`${styles.container} ${
+          isSignUp ? styles["right-panel-active"] : ""
+        }`}
         id="container"
       >
         <div
@@ -166,12 +180,21 @@ const Login = () => {
             >
               Signin
             </Button>
-
-            {/* <button className={styles.button} onClick={login}>
-              Sign In
-            </button> */}
+            {loading ? (
+              <Spinner
+                color="black"
+                size="large"
+                w={20}
+                h={20}
+                alignSelf="center"
+                margin="auto"
+              />
+            ) : (
+              <></>
+            )}
           </form>
         </div>
+
         <div
           className={
             styles["form-container"] + " " + styles["sign-up-container"]
@@ -179,7 +202,7 @@ const Login = () => {
         >
           <form method="POST">
             <h1>Create Account</h1>
-           {/* <div className={styles["social-container"]}>
+            {/* <div className={styles["social-container"]}>
                <a href="#" className={styles.social}>
                 <i className="fab fa-facebook-f"></i>
               </a>
@@ -226,6 +249,18 @@ const Login = () => {
             >
               Sign Up
             </Button>
+            {loading ? (
+              <Spinner
+                color="black"
+                size="large"
+                w={20}
+                h={20}
+                alignSelf="center"
+                margin="auto"
+              />
+            ) : (
+              <></>
+            )}
           </form>
         </div>
         <div className={styles["overlay-container"]}>

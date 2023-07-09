@@ -13,7 +13,7 @@ function App() {
   return (
     <Box display="flex" w="100%" h="100%">
       <Routes>
-      <Route  path="/" element={<Homepage />} />
+      <Route  exact path="/" element={<Homepage />} />
 
       <Route
           path="/chats"
