@@ -108,7 +108,7 @@ const Login = () => {
       const response = await axios.post(`${API_URL}/login`, userSignIn);
       //alert(response.data.name);
       localStorage.setItem("userInfo", JSON.stringify(response.data));
-      console.log(response);
+      // console.log(response);
       setLoading(false);
       setUser(response.data);
       navigate("/chats");
