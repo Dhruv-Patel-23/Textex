@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { ChatState } from "../../context/ChatProvider";
 import { Box, Flex, Text } from "@chakra-ui/layout";
@@ -16,14 +15,14 @@ import UpdateGroupChatModal from "./extras/UpdateGroupChatModal";
 import { useState } from "react";
 import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
-import io from 'socket.io-client'
+import io from "socket.io-client";
 
-
-const API_URL="https://textex-server.onrender.com"
-var socket,selectedChatCompare;
+const API_URL = "https://textex-server.onrender.com";
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { user, selectedChat, setSelectedChat ,notification,setNotification  } = ChatState();
+  const { user, selectedChat, setSelectedChat, notification, setNotification } =
+    ChatState();
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,7 +34,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const toast = useToast();
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
-      socket.emit('stop typing',selectedChat._id);
+      socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
           headers: {
@@ -49,7 +48,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
         // console.log(data);
-        socket.emit("new message",data)
+        socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -98,51 +97,52 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
   useEffect(() => {
-    socket =io(API_URL)
-    socket.emit("setup",user)
-    socket.on("connected",()=>{
-   setSocketConnected(true)
-    })
-    socket.on('typing',()=>setIsTyping(true))
-    socket.on('stop typing',()=>setIsTyping(false))
-   }, []);
+    socket = io(API_URL);
+    socket.emit("setup", user);
+    socket.on("connected", () => {
+      setSocketConnected(true);
+    });
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop typing", () => setIsTyping(false));
+  }, []);
 
   useEffect(() => {
     fetchMessages();
-    selectedChatCompare=selectedChat;
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
-  useEffect(()=>{
-    socket.on('message recieved',(newMessageRecieved)=>{
-      if(!selectedChatCompare||selectedChatCompare._id!==newMessageRecieved.chat._id){
-          if(!notification.includes(newMessageRecieved)){
-            setNotification([newMessageRecieved,...notification]);
-            setFetchAgain(!fetchAgain);
-          }
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
+      } else {
+        setMessages([...messages, newMessageRecieved]);
       }
-      else{
-        setMessages([...messages,newMessageRecieved]);
-      }
-    })
-  })
+    });
+  });
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
 
-
-    if(!socketConnected) return;
-    if(!typing) {
+    if (!socketConnected) return;
+    if (!typing) {
       setTyping(true);
-      socket.emit("typing",selectedChat._id)
+      socket.emit("typing", selectedChat._id);
     }
-    let lastTypingTime=new Date().getTime()
-    var timerLength=3000;
-    setTimeout(()=>{
-     var timeNow =new Date().getTime();
-     var timeDiff = timeNow-lastTypingTime;
-     if(timeDiff>=timerLength && typing){
-      socket.emit("stop typing",selectedChat._id);
-      setTyping(false);
-     }
-    },timerLength);
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
   return (
     <Box display="flex" flexDirection="column" w="100%" h="100%" p={3}>
@@ -174,15 +174,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 h="100%"
                 display="flex"
                 justifyContent="space-between"
-              // justifyContent="center"
+                // justifyContent="center"
               >
-
-                <Text fontWeight="bold" fontSize="xx-large" _firstLetter={{ textTransform: "uppercase" }} color="black" fontStyle="italic">
+                <Text
+                  fontWeight="bold"
+                  fontSize="xx-large"
+                  _firstLetter={{ textTransform: "uppercase" }}
+                  color="black"
+                  fontStyle="italic"
+                >
                   {getSender(user, selectedChat.users)}
                 </Text>
 
                 <ProfileModal user={getSenderFull(user, selectedChat.users)} />
-
               </Box>
             ) : (
               <Box
@@ -190,14 +194,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 h="100%"
                 display="flex"
                 justifyContent="space-between"
-              // justifyContent="center"
+                // justifyContent="center"
               >
-                <Text fontWeight="bold" fontSize="xx-large" _firstLetter={{ textTransform: "uppercase" }} color="black" fontStyle="italic">
+                <Text
+                  fontWeight="bold"
+                  fontSize="xx-large"
+                  _firstLetter={{ textTransform: "uppercase" }}
+                  color="black"
+                  fontStyle="italic"
+                >
                   {selectedChat.chatName}
                 </Text>
 
                 <UpdateGroupChatModal
-
                   fetchMessages={fetchMessages}
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
@@ -217,6 +226,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             minHeight="300px" // Adjust the minHeight as needed
             borderRadius="lg"
             overflowY="auto" // Use auto to enable vertical scrolling when the content overflows
+            // style={{
+            //   // backgroundImage:
+            //   //   "url('https://th.bing.com/th/id/OIP.-fBTq-BGBqcOJISrDYj4RAHaEK?w=292&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7')",
+            //   // backgroundSize: "cover",
+            //   // backgroundRepeat: "no-repeat",
+            //   // backgroundPosition: "center",
+            //   backgroundColor:"aqua"
+            // }}
           >
             {loading ? (
               <Spinner
@@ -227,7 +244,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 margin="auto"
               />
             ) : (
-              <div className="messages">
+              <div
+                className="messages"
+                style={{ height: "100vh", overflow: "auto" }}
+              >
                 <ScrollableChat messages={messages} />
               </div>
             )}
@@ -249,7 +269,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )} */}
-              {istyping?<div>typing...</div>:<></>}
+              {istyping ? <div>typing...</div> : <></>}
               <Input
                 variant="filled"
                 bg="#E0E0E0"
@@ -260,7 +280,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             </FormControl>
             {/* Messages here */}
           </Box>
-        </Box >
+        </Box>
       ) : (
         <>
           <Box
@@ -269,14 +289,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             justifyContent="center"
             h="100%"
           >
-            <Text fontWeight="bold" fontSize="xx-large" _firstLetter={{ textTransform: "uppercase" }} color="white" fontStyle="italic">
+            <Text
+              fontWeight="bold"
+              fontSize="xx-large"
+              _firstLetter={{ textTransform: "uppercase" }}
+              color="white"
+              fontStyle="italic"
+            >
               Welcome to Textex. Start chatting
-
             </Text>
           </Box>
         </>
       )}
-    </Box >
+    </Box>
   );
 };
 

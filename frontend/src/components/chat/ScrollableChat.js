@@ -15,10 +15,11 @@ const ScrollableChat = ({ messages }) => {
   return (
     <div
       style={{
-        height: "400px",
+        height: "100%",
         overflowY: "auto",
         scrollbarWidth: "thin",
         scrollbarColor: "transparent transparent",
+        
       }}
     >
       <ScrollableFeed>
